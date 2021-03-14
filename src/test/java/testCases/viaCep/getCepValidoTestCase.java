@@ -5,12 +5,11 @@ import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import testBases.viaCep.PesquisarCepTestBase;
+import testBases.viaCep.CepValidoTestBase;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
 
-public class getCepTestBase extends PesquisarCepTestBase {
+public class getCepValidoTestCase extends CepValidoTestBase {
 
     @Test
     public void getCepValido(){
@@ -39,7 +38,7 @@ public class getCepTestBase extends PesquisarCepTestBase {
         FileOperations.setProperties("retornoConsultaCepValido","uf", payLoad.then().extract().path("uf"));
         FileOperations.setProperties("retornoConsultaCepValido","ibge", payLoad.then().extract().path("ibge"));
 
-        payLoad.then().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Schemas/PesquisarCepJsonSchema.json"));
+        payLoad.then().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Schemas/CepValidoJsonSchema.json"));
     }
 
 }
