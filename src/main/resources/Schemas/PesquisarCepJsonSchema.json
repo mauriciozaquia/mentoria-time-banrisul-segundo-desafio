@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "title": "The root schema",
+  "description": "The root schema comprises the entire JSON document.",
+  "default": {},
+  "required": [
+    "cep",
+    "logradouro",
+    "complemento",
+    "bairro",
+    "localidade",
+    "uf",
+    "ibge",
+    "gia",
+    "ddd",
+    "siafi"
+  ],
+  "properties": {
+    "cep": {
+      "$id": "#/properties/cep",
+      "type": "string",
+      "title": "The cep schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": ""
+    },
+    "logradouro": {
+      "$id": "#/properties/logradouro",
+      "type": "string",
+      "title": "The logradouro schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": ""
+    },
+    "complemento": {
+      "$id": "#/properties/complemento",
+      "type": "string",
+      "title": "The complemento schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": ""
+    },
+    "bairro": {
+      "$id": "#/properties/bairro",
+      "type": "string",
+      "title": "The bairro schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": ""
+    },
+    "localidade": {
+      "$id": "#/properties/localidade",
+      "type": "string",
+      "title": "The localidade schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": ""
+    },
+    "uf": {
+      "$id": "#/properties/uf",
+      "type": "string",
+      "title": "The uf schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": ""
+    },
+    "ibge": {
+      "$id": "#/properties/ibge",
+      "type": "string",
+      "title": "The ibge schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": ""
+    },
+    "gia": {
+      "$id": "#/properties/gia",
+      "type": "string",
+      "title": "The gia schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": ""
+    },
+    "ddd": {
+      "$id": "#/properties/ddd",
+      "type": "string",
+      "title": "The ddd schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": ""
+    },
+    "siafi": {
+      "$id": "#/properties/siafi",
+      "type": "string",
+      "title": "The siafi schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": ""
+    }
+  },
+  "additionalProperties": true
+}
