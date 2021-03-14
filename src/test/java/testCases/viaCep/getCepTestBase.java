@@ -1,12 +1,14 @@
 package testCases.viaCep;
 
 import Utilities.FileOperations;
+import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import testBases.viaCep.PesquisarCepTestBase;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 
 public class getCepTestBase extends PesquisarCepTestBase {
 
@@ -24,7 +26,6 @@ public class getCepTestBase extends PesquisarCepTestBase {
                 .spec(responseSpec).extract().response();
         ;
 
-
         String cepConsultado = FileOperations.getProperties("cep").getProperty("cepValido");
         String cepResposta = payLoad.then().extract().path("cep");
         cepResposta = cepResposta.replaceAll("-","");
@@ -38,8 +39,7 @@ public class getCepTestBase extends PesquisarCepTestBase {
         FileOperations.setProperties("retornoConsultaCepValido","uf", payLoad.then().extract().path("uf"));
         FileOperations.setProperties("retornoConsultaCepValido","ibge", payLoad.then().extract().path("ibge"));
 
-        //TODO criar contrato
-
+        payLoad.then().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Schemas/PesquisarCepJsonSchema.json"));
     }
 
 }
