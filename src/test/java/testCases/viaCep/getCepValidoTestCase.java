@@ -28,7 +28,7 @@ public class getCepValidoTestCase extends CepValidoTestBase {
             String cepConsultado = FileOperations.getProperties("cep").getProperty("cepValido");
             String cepResposta = payLoad.then().extract().path("cep").toString().replaceAll("-","");
 
-            Assertions.assertEquals(cepResposta , cepResposta);
+            Assertions.assertEquals(cepConsultado , cepResposta);
 
             setValoresProperties(payLoad.then().extract().path("cep"),
                     payLoad.then().extract().path("logradouro"),
@@ -39,7 +39,6 @@ public class getCepValidoTestCase extends CepValidoTestBase {
                     payLoad.then().extract().path("ibge"));
         } catch (Error | Exception e) {
             setValoresProperties("", "", "", "", "", "", "");
-
             System.out.println("Problema ao consultar cep, retorno diferente do esperado " + e.getMessage());
         }
 
