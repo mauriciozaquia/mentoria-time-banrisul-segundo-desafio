@@ -1,7 +1,7 @@
 # Desafio DBServer - Mentoria Banrisul
 ## Testes automatizados de API
 
-Estes *Script* foi desenvolvido para o desafio de testes automatizados da mentoria do time **DBserver-Banrisul**, tem por objetivo testar e validar casos de uso para a API **viacep**
+Estes *Script* foi desenvolvido para o desafio de testes automatizados da mentoria do time **DBserver-Banrisul**, tem por objetivo testar e validar casos de uso para a API [**VIACEP**](https://viacep.com.br/)
 
 ### PRÉ REQUISITOS 
 
