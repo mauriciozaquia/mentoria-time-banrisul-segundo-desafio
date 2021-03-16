@@ -26,7 +26,7 @@ Além disto é bom ter uma IDE Java para trabalhar com o código como por exempl
 
 ### GERAÇÃO DE RELATÓRIO - ALLURE
 
-* Apos executar os testes, verificar se foram gerados os arquivos no pacote "build/allure-results
+* Apos executar os testes, verificar se foram gerados os arquivos no pacote "build/allure-results"
 * Caso positivo, abrir o terminal (da IDE ou do sistema operacional)
 * Digitar o comando "alure server build/allure-results" sem as aspas
 * O relatório irá abrir no navegador padrão em formato HTML
