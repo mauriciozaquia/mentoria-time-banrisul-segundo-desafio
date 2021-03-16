@@ -1,7 +1,6 @@
 package testBases.viaCep;
 
-import Utilities.FileOperations;
-import io.restassured.builder.RequestSpecBuilder;
+import Utilities.CepRequestSpecification;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
@@ -12,30 +11,21 @@ public class CepInexistenteTestBase {
 
     protected static RequestSpecification requestSpec;
     protected static ResponseSpecification responseSpec;
-    protected static final String requestType = "json";
 
     @BeforeAll
-    public static void setUp(){
-        buildCepInexistente();
+    public static void setUp() {
         buildRequestSpec();
         buildResponseSpec();
     }
 
-    public static void buildRequestSpec(){
-        requestSpec = new RequestSpecBuilder()
-                .setBaseUri("https://viacep.com.br")
-                .setBasePath("/ws/"+ FileOperations.getProperties("cep").getProperty("cepInexistente") +"/" + requestType)
-                .build();
+    public static void buildRequestSpec() {
+        requestSpec = CepRequestSpecification.getCepRequestSpecification();
     }
 
-    public static void buildResponseSpec(){
+    public static void buildResponseSpec() {
         responseSpec = new ResponseSpecBuilder()
                 .expectContentType(ContentType.JSON)
                 .expectStatusCode(200)
                 .build();
-    }
-
-    public static void buildCepInexistente(){
-        FileOperations.setProperties("cep","cepInexistente","99999999");
     }
 }

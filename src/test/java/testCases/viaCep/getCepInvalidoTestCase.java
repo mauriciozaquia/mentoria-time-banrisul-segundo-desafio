@@ -1,7 +1,9 @@
 package testCases.viaCep;
 
-import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
+import Utilities.FileOperations;
+import Utilities.RequestTypes;
+import io.qameta.allure.Description;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import testBases.viaCep.CepInvalidoTestBase;
 
@@ -9,24 +11,18 @@ import static io.restassured.RestAssured.given;
 
 public class getCepInvalidoTestCase extends CepInvalidoTestBase {
 
+    @Description("Consulta um CEP inválido")
+    @DisplayName("Consulta CEP inválido")
     @Test
-    public void getCepInvalido(){
-        Response payLoad =
-
-                given()
-                        .spec(requestSpec)
-                .when()
-                        .get()
-                .then()
-                        .spec(responseSpec).extract().response()
-                ;
-
-        try {
-            Assertions.assertEquals("200", payLoad.then().extract().statusCode());
-            System.out.println("Cep consultado com sucesso!");
-        } catch (Error | Exception e) {
-            System.out.println("Erro ao consultar cep, formato invalido!");
-        }
+    public void getCepInvalido() {
+        given()
+                .spec(requestSpec)
+                .pathParam("cep", FileOperations.getProperties("cep").getProperty("cepInvalido"))
+        .when()
+                .get("/{cep}/" + RequestTypes.getJson())
+        .then()
+                .spec(responseSpec)
+        ;
     }
 
 }

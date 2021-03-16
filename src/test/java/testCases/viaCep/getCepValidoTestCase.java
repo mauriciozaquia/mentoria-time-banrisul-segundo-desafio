@@ -1,16 +1,24 @@
 package testCases.viaCep;
 
 import Utilities.FileOperations;
-import io.restassured.module.jsv.JsonSchemaValidator;
+import Utilities.PropertiesSaver;
+import Utilities.RequestTypes;
+import io.qameta.allure.Description;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import testBases.viaCep.CepValidoTestBase;
 
+import java.util.ArrayList;
+
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 
 public class getCepValidoTestCase extends CepValidoTestBase {
 
+    @Description("Consulta um CEP válido")
+    @DisplayName("Consulta CEP válido")
     @Test
     public void getCepValido() {
 
@@ -18,41 +26,48 @@ public class getCepValidoTestCase extends CepValidoTestBase {
 
                 given()
                         .spec(requestSpec)
+                        .pathParam("cep", FileOperations.getProperties("cep").getProperty("cepValido"))
                 .when()
-                        .get()
+                        .get("/{cep}/" + RequestTypes.getJson())
+                .then()
+                        .body("cep", equalTo("94930-400"))
+                        .body("complemento", equalTo(""))
+                        .body("logradouro", equalTo("Rua Modesto Lima"))
+                        .body("bairro", equalTo("Vila Regina"))
+                        .body("uf", equalTo("RS"))
+                        .body("ibge", equalTo("4303103"))
+                        .spec(responseSpec).extract().response();
+        ;
+
+        String cepConsultado = FileOperations.getProperties("cep").getProperty("cepValido");
+        String cepResposta = payLoad.then().extract().path("cep").toString().replaceAll("-", "");
+        Assertions.assertEquals(cepConsultado, cepResposta);
+
+        PropertiesSaver.setValoresProperties(payLoad);
+    }
+
+    @Description("Consulta um endereco valido a partir de um logradouro")
+    @DisplayName("Consulta CEP Logradouro")
+    @Test
+    public void getCepValidoLogradouro() {
+
+        Response payLoad =
+
+                given()
+                        .spec(requestSpec)
+                        .pathParam("estado", FileOperations.getProperties("cep").getProperty("estado"))
+                        .pathParam("cidade", FileOperations.getProperties("cep").getProperty("cidade"))
+                        .pathParam("logradouro", FileOperations.getProperties("cep").getProperty("logradouro"))
+                .when()
+                        .get("/{estado}/{cidade}/{logradouro}/" + RequestTypes.getJson())
                 .then()
                         .spec(responseSpec).extract().response();
         ;
 
-        try {
-            String cepConsultado = FileOperations.getProperties("cep").getProperty("cepValido");
-            String cepResposta = payLoad.then().extract().path("cep").toString().replaceAll("-","");
+        ArrayList<String> cepsActual = payLoad.then().extract().path("cep");
+        String[] cepsExpected = {"94085-170", "94175-000"};
 
-            Assertions.assertEquals(cepConsultado , cepResposta);
-
-            setValoresProperties(payLoad.then().extract().path("cep"),
-                    payLoad.then().extract().path("logradouro"),
-                    payLoad.then().extract().path("complemento"),
-                    payLoad.then().extract().path("bairro"),
-                    payLoad.then().extract().path("localidade"),
-                    payLoad.then().extract().path("uf"),
-                    payLoad.then().extract().path("ibge"));
-        } catch (Error | Exception e) {
-            setValoresProperties("", "", "", "", "", "", "");
-            System.out.println("Problema ao consultar cep, retorno diferente do esperado " + e.getMessage());
-        }
-
-        payLoad.then().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Schemas/CepValidoJsonSchema.json"));
-    }
-
-    public void setValoresProperties(String cep, String logradouro, String complemento, String bairro, String localidade, String uf, String ibge) {
-        FileOperations.setProperties("retornoConsultaCepValido", "cep", cep);
-        FileOperations.setProperties("retornoConsultaCepValido", "logradouro", logradouro);
-        FileOperations.setProperties("retornoConsultaCepValido", "complemento", complemento);
-        FileOperations.setProperties("retornoConsultaCepValido", "bairro", bairro);
-        FileOperations.setProperties("retornoConsultaCepValido", "localidade", localidade);
-        FileOperations.setProperties("retornoConsultaCepValido", "uf", uf);
-        FileOperations.setProperties("retornoConsultaCepValido", "ibge", ibge);
+        Assertions.assertArrayEquals(cepsExpected, cepsActual.toArray());
     }
 
 }
