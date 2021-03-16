@@ -30,12 +30,12 @@ public class getCepValidoTestCase extends CepValidoTestBase {
                 .when()
                         .get("/{cep}/" + RequestTypes.getJson())
                 .then()
-                        .body("cep", equalTo("94930-400"))
+                        .body("cep", equalTo("91060-900"))
                         .body("complemento", equalTo(""))
-                        .body("logradouro", equalTo("Rua Modesto Lima"))
-                        .body("bairro", equalTo("Vila Regina"))
+                        .body("logradouro", equalTo("Avenida Assis Brasil 3940"))
+                        .body("bairro", equalTo("São Sebastião"))
                         .body("uf", equalTo("RS"))
-                        .body("ibge", equalTo("4303103"))
+                        .body("ibge", equalTo("4314902"))
                         .spec(responseSpec).extract().response();
         ;
 
